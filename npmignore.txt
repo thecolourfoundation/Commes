@@ -1,0 +1,20 @@
+# Source (consumers use the compiled dist/)
+src/
+tests/
+examples/
+
+# Config
+tsconfig.json
+jest.config.json
+.eslintrc*
+
+# Dev files
+*.log
+.DS_Store
+coverage/
+.nyc_output/
+
+# GitHub-only docs
+CONTRIBUTING.md
+CHANGELOG.md
+SECURITY.md
