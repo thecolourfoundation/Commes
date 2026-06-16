@@ -1,8 +1,8 @@
-# QuantumShield
+# Commes
 
 A quantum-resistant, AI-powered security layer for Node.js applications.
 
-QuantumShield combines platform-level threat detection with developer-first vulnerability defence and post-quantum cryptographic primitives — all surfaced through an AI agent that talks to you in plain English while your application runs.
+Commes combines platform-level threat detection with developer-first vulnerability defence and post-quantum cryptographic primitives — all surfaced through an AI agent that talks to you in plain English while your application runs.
 
 ---
 
@@ -27,7 +27,7 @@ QuantumShield combines platform-level threat detection with developer-first vuln
 ## Installation
 
 ```bash
-npm install quantumshield
+npm install commes
 ```
 
 Node.js 18 or later is required.
@@ -40,11 +40,11 @@ Node.js 18 or later is required.
 
 ```typescript
 import express from 'express';
-import { shield } from 'quantumshield';
+import { shield } from 'commes';
 
 const app = express();
 
-// Parse bodies before QuantumShield so it can inspect them
+// Parse bodies before Commes so it can inspect them
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
 
@@ -69,7 +69,7 @@ app.listen(3000);
 ### Listening to threat events
 
 ```typescript
-import { shieldEmitter } from 'quantumshield';
+import { shieldEmitter } from 'commes';
 
 // Fires for every detected threat, blocked or flagged
 shieldEmitter.on('threat', (event) => {
@@ -86,7 +86,7 @@ shieldEmitter.on('blocked', (event) => {
 ### AI agent alongside your server
 
 ```typescript
-import { Agent } from 'quantumshield';
+import { Agent } from 'commes';
 
 const agent = new Agent({
   verbosity: 'verbose',   // 'concise' for one-liners, 'verbose' for full detail
@@ -100,7 +100,7 @@ agent.start(true); // true = open the interactive REPL
 ### Post-quantum token signing
 
 ```typescript
-import { dilithiumKeyGen, signToken, verifyToken } from 'quantumshield';
+import { dilithiumKeyGen, signToken, verifyToken } from 'commes';
 
 // Generate a key pair once and store the private key securely
 const { publicKey, privateKey } = dilithiumKeyGen();
@@ -122,9 +122,9 @@ if (!payload) {
 ### Scan a project
 
 ```bash
-npx quantumshield scan ./
-npx quantumshield scan ./ --deps-only    # only check package.json
-npx quantumshield scan ./ --source-only  # only check source files
+npx commes scan ./
+npx commes scan ./ --deps-only    # only check package.json
+npx commes scan ./ --source-only  # only check source files
 ```
 
 The scanner exits with code 1 if any critical or high severity findings are present, making it straightforward to fail CI pipelines on vulnerable builds.
@@ -132,8 +132,8 @@ The scanner exits with code 1 if any critical or high severity findings are pres
 ### Start the interactive agent
 
 ```bash
-npx quantumshield monitor
-npx quantumshield monitor --quiet  # one-line-per-event mode
+npx commes monitor
+npx commes monitor --quiet  # one-line-per-event mode
 ```
 
 **Agent REPL commands:**
@@ -153,8 +153,8 @@ Examples: `explain xss` · `explain sql-injection` · `explain prototype-polluti
 ### Generate a post-quantum key pair
 
 ```bash
-npx quantumshield keygen
-npx quantumshield keygen --output ./keys
+npx commes keygen
+npx commes keygen --output ./keys
 ```
 
 Add the generated `qs-private.key` to your `.gitignore` immediately.
@@ -201,7 +201,7 @@ interface ShieldConfig {
 
 ## Cryptographic primitives
 
-QuantumShield implements the NIST Post-Quantum Cryptography standard finalists:
+Commes implements the NIST Post-Quantum Cryptography standard finalists:
 
 **CRYSTALS-Kyber-768** — a lattice-based key encapsulation mechanism (KEM) whose security reduces to the hardness of the Module Learning With Errors (MLWE) problem. Used for quantum-safe key exchange.
 
@@ -218,8 +218,8 @@ For a production deployment handling regulated data, replace the pure-TypeScript
 The default rate limiter and IP reputation tracker use in-memory stores, which means state is not shared across processes. For multi-instance or clustered deployments, implement the `RateLimitStore` interface and back it with Redis:
 
 ```typescript
-import { shield } from 'quantumshield';
-import type { RateLimitStore, RateLimitEntry } from 'quantumshield';
+import { shield } from 'commes';
+import type { RateLimitStore, RateLimitEntry } from 'commes';
 import { createClient } from 'redis';
 
 class RedisStore implements RateLimitStore {
@@ -245,7 +245,7 @@ class RedisStore implements RateLimitStore {
 
 ## Security of the package itself
 
-QuantumShield is designed to not be a liability:
+Commes is designed to not be a liability:
 
 - **No telemetry.** Nothing leaves your machine except the HTTP responses your application sends.
 - **No eval.** The package never calls `eval()`, `Function()`, or any dynamic code execution.
@@ -258,7 +258,7 @@ QuantumShield is designed to not be a liability:
 
 ## Limitations
 
-QuantumShield is a strong first line of defence, not a complete security programme. It does not replace:
+Commes is a strong first line of defence, not a complete security programme. It does not replace:
 
 - A properly configured WAF or CDN (Cloudflare, AWS WAF) at the network edge
 - Secrets management (Vault, AWS Secrets Manager, environment variables)
