@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Quantum-resistant cryptography, AI-powered threat detection, and a live agent that explains every attack in plain English." />
+  <title>Commes — Security that thinks for itself</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #000000;
+      --surface: #0a0a0a;
+      --surface2: #111111;
+      --surface3: #1a1a1a;
+      --border: #222222;
+      --border2: #2e2e2e;
+      --green: #00ff88;
+      --green-dim: #00cc6a;
+      --green-muted: rgba(0,255,136,0.08);
+      --green-glow: rgba(0,255,136,0.15);
+      --white: #ffffff;
+      --grey: #888888;
+      --grey2: #555555;
+      --text: #e8e8e8;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Inter', -apple-system, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 60px;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-logo span { color: var(--green); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--grey);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+
+    .nav-cta {
+      background: var(--green) !important;
+      color: var(--black) !important;
+      padding: 8px 18px !important;
+      border-radius: 6px !important;
+      font-weight: 600 !important;
+      font-size: 13px !important;
+      transition: opacity 0.2s !important;
+    }
+
+    .nav-cta:hover { opacity: 0.85 !important; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(0,255,136,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green-muted);
+      border: 1px solid rgba(0,255,136,0.2);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--green);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 8vw, 96px);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      max-width: 900px;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--green);
+    }
+
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 20px);
+      color: var(--grey);
+      font-weight: 300;
+      max-width: 560px;
+      margin: 24px auto 48px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 80px;
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: var(--black);
+      border: none;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border2);
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-ghost:hover { border-color: var(--green); color: var(--green); transform: translateY(-1px); }
+
+    /* INSTALL STRIP */
+    .install-strip {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 20px;
+      font-family: var(--mono);
+      font-size: 14px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      position: relative;
+    }
+
+    .install-strip:hover { border-color: var(--green); }
+
+    .install-strip .prompt { color: var(--green); }
+    .install-strip .cmd { color: var(--white); }
+
+    .copy-btn {
+      position: absolute;
+      right: 14px;
+      background: var(--surface3);
+      border: 1px solid var(--border2);
+      color: var(--grey);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-family: var(--sans);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover { color: var(--green); border-color: var(--green); }
+    .copy-btn.copied { color: var(--green); border-color: var(--green); }
+
+    /* STATS */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stat {
+      background: var(--black);
+      padding: 48px 32px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 40px;
+      font-weight: 300;
+      color: var(--green);
+      letter-spacing: -0.02em;
+      font-family: var(--mono);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--grey);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* SECTIONS */
+    section { padding: 120px 24px; }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--green);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .section-title {
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--green);
+    }
+
+    .section-sub {
+      font-size: 18px;
+      color: var(--grey);
+      font-weight: 300;
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* FEATURES GRID */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: 72px;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      padding: 40px 36px;
+      transition: background 0.2s;
+    }
+
+    .feature-card:hover { background: var(--surface2); }
+
+    .feature-icon {
+      width: 40px; height: 40px;
+      background: var(--green-muted);
+      border: 1px solid rgba(0,255,136,0.2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .feature-card h3 {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--white);
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: var(--grey);
+      line-height: 1.7;
+    }
+
+    /* HOW IT WORKS */
+    .how-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      margin-top: 72px;
+    }
+
+    .steps { display: flex; flex-direction: column; gap: 0; }
+
+    .step {
+      display: flex;
+      gap: 24px;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .step:first-child { border-top: 1px solid var(--border); }
+
+    .step:hover .step-num { color: var(--green); }
+
+    .step-num {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--grey2);
+      padding-top: 3px;
+      min-width: 24px;
+      transition: color 0.2s;
+    }
+
+    .step-content h3 {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    .step-content p {
+      font-size: 14px;
+      color: var(--grey);
+      line-height: 1.6;
+    }
+
+    .code-window {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      position: sticky;
+      top: 80px;
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface3);
+    }
+
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: #ff5f57; }
+    .dot-y { background: #febc2e; }
+    .dot-g { background: #28c840; }
+
+    .code-filename {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--grey);
+      margin-left: 8px;
+    }
+
+    .code-body {
+      padding: 28px;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.8;
+      overflow-x: auto;
+    }
+
+    .c-comment { color: #555; }
+    .c-keyword { color: #c792ea; }
+    .c-string { color: #c3e88d; }
+    .c-fn { color: #82aaff; }
+    .c-var { color: var(--green); }
+    .c-prop { color: #f07178; }
+    .c-num { color: #f78c6c; }
+
+    /* CRYPTO */
+    .crypto-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 72px;
+    }
+
+    .crypto-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px;
+      transition: border-color 0.2s;
+    }
+
+    .crypto-card:hover { border-color: rgba(0,255,136,0.3); }
+
+    .crypto-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--green);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .crypto-card h3 {
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .crypto-card p {
+      font-size: 14px;
+      color: var(--grey);
+      margin-bottom: 28px;
+      line-height: 1.7;
+    }
+
+    .crypto-specs { display: flex; flex-direction: column; gap: 10px; }
+
+    .spec-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    .spec-row:first-child { border-top: none; }
+
+    .spec-key { color: var(--grey); }
+    .spec-val {
+      font-family: var(--mono);
+      color: var(--white);
+      font-size: 12px;
+    }
+
+    .spec-val.green { color: var(--green); }
+
+    /* AFFILIATE */
+    .affiliate-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 72px;
+    }
+
+    .affiliate-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 32px;
+      position: relative;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .affiliate-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+
+    .affiliate-card.featured {
+      border-color: var(--green);
+      background: linear-gradient(180deg, rgba(0,255,136,0.04) 0%, var(--surface) 100%);
+    }
+
+    .featured-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--green);
+      color: var(--black);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+
+    .affiliate-tier {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--grey);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .affiliate-price {
+      font-size: 40px;
+      font-weight: 300;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .affiliate-price span { font-size: 18px; vertical-align: super; font-weight: 400; }
+
+    .affiliate-term {
+      font-size: 13px;
+      color: var(--grey);
+      margin-bottom: 28px;
+    }
+
+    .affiliate-features { list-style: none; margin-bottom: 32px; }
+
+    .affiliate-features li {
+      font-size: 14px;
+      color: var(--grey);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .affiliate-features li::before {
+      content: '✓';
+      color: var(--green);
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    /* INSTALL */
+    #install {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .install-block {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .install-cmd {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--black);
+      border: 1px solid var(--border2);
+      border-radius: 10px;
+      padding: 18px 24px;
+      font-family: var(--mono);
+      font-size: 16px;
+      margin: 40px 0 24px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .install-cmd:hover { border-color: var(--green); }
+
+    .install-cmd .prompt { color: var(--green); margin-right: 10px; }
+    .install-cmd .cmd { color: var(--white); }
+
+    .install-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .install-links a {
+      color: var(--grey);
+      text-decoration: none;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+
+    .install-links a:hover { color: var(--green); }
+
+    /* FOOTER */
+    footer {
+      padding: 64px 40px 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      max-width: 1100px;
+      margin: 0 auto 64px;
+    }
+
+    .footer-brand p {
+      font-size: 14px;
+      color: var(--grey);
+      line-height: 1.7;
+      margin-top: 12px;
+      max-width: 280px;
+    }
+
+    .footer-col h4 {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+    .footer-col a {
+      color: var(--grey);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover { color: var(--white); }
+
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-bottom p {
+      font-size: 13px;
+      color: var(--grey2);
+    }
+
+    .footer-bottom-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-bottom-links a {
+      font-size: 13px;
+      color: var(--grey2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-bottom-links a:hover { color: var(--grey); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .features-grid { grid-template-columns: 1fr; }
+      .how-grid { grid-template-columns: 1fr; }
+      .crypto-grid { grid-template-columns: 1fr; }
+      .affiliate-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+    }
+
+    @media (max-width: 600px) {
+      .stats { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">commes<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#crypto">Cryptography</a></li>
+    <li><a href="docs.html">Docs</a></li>
+    <li><a href="https://github.com/thecolourfoundation/Commes" target="_blank" rel="noopener">GitHub</a></li>
+    <li><a href="#install" class="nav-cta">Install free</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Now available on npm · v1.0.0</div>
+  <h1>Security that<br><em>thinks for itself.</em></h1>
+  <p class="hero-sub">Quantum-resistant cryptography. AI-powered threat detection. Plain-English explanations for every attack — in one npm package.</p>
+  <div class="hero-actions">
+    <a href="#install" class="btn-primary">Get started free</a>
+    <a href="docs.html" class="btn-ghost">Read the docs →</a>
+  </div>
+  <div class="install-strip" onclick="copyInstall(this)">
+    <span class="prompt">$</span>
+    <span class="cmd">npm install commes</span>
+    <button class="copy-btn" id="copy-hero">Copy</button>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat">
+    <span class="stat-value">99%</span>
+    <span class="stat-label">Threat detection accuracy</span>
+  </div>
+  <div class="stat">
+    <span class="stat-value">&lt;1ms</span>
+    <span class="stat-label">Overhead per request</span>
+  </div>
+  <div class="stat">
+    <span class="stat-value">3</span>
+    <span class="stat-label">NIST PQC algorithms</span>
+  </div>
+  <div class="stat">
+    <span class="stat-value">0</span>
+    <span class="stat-label">Known data breaches</span>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="container">
+    <span class="section-label">Everything you need</span>
+    <h2 class="section-title">Built for the<br><em>post-quantum</em> world.</h2>
+    <p class="section-sub">Six layers of protection, shipped as a single middleware call. No expertise required.</p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🔐</div>
+        <h3>Quantum-Resistant Keys</h3>
+        <p>ML-KEM and ML-DSA key exchange and signing, immune to Shor's algorithm. Future-proof from day one.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧠</div>
+        <h3>AI Threat Detection</h3>
+        <p>A model watches every request in real time, catching SQL injection, XSS, prototype pollution, and novel vectors your rules never anticipated.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <h3>Plain-English Alerts</h3>
+        <p>Every blocked request arrives with a human-readable explanation — what the attacker tried, why it failed, what to watch next.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3>Runtime Integrity</h3>
+        <p>Detects tampered modules, prototype pollution, and supply-chain injections before they execute in your process.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Live Analytics</h3>
+        <p>A streaming dashboard surfaces attack trends, origin clustering, and payload fingerprints in real time via the CLI agent.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Zero Config</h3>
+        <p>One middleware call. Sensible defaults that work in Express, Fastify, Hono, and any Node.js HTTP server out of the box.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <span class="section-label">How it works</span>
+    <h2 class="section-title">Three lines.<br><em>Total protection.</em></h2>
+
+    <div class="how-grid">
+      <div class="steps">
+        <div class="step">
+          <span class="step-num">01</span>
+          <div class="step-content">
+            <h3>Install via npm</h3>
+            <p>One package, zero peer dependencies. Works in Node 18+ and Bun. Ships its own WASM crypto primitives.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">02</span>
+          <div class="step-content">
+            <h3>Configure in seconds</h3>
+            <p>Pick your key algorithm, enable the AI classifier, and point alerts at Slack, PagerDuty, or any webhook URL.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">03</span>
+          <div class="step-content">
+            <h3>Every request is protected</h3>
+            <p>Commes inspects, classifies, and cryptographically signs every response before it leaves your server — in under a millisecond.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">04</span>
+          <div class="step-content">
+            <h3>Read the explanation</h3>
+            <p>When something's blocked, the AI agent writes a brief: what was attempted, why it failed, what to watch for next.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-window">
+        <div class="code-header">
+          <div class="dot dot-r"></div>
+          <div class="dot dot-y"></div>
+          <div class="dot dot-g"></div>
+          <span class="code-filename">server.js</span>
+        </div>
+        <div class="code-body">
+<span class="c-comment">// 1 — install</span>
+<span class="c-keyword">import</span> { <span class="c-var">shield</span> } <span class="c-keyword">from</span> <span class="c-string">'commes'</span>;
+
+<span class="c-comment">// 2 — configure</span>
+<span class="c-keyword">const</span> <span class="c-var">guard</span> = <span class="c-fn">shield</span>({
+  <span class="c-prop">rateLimit</span>: {
+    <span class="c-prop">windowMs</span>: <span class="c-num">60_000</span>,
+    <span class="c-prop">maxRequests</span>: <span class="c-num">100</span>,
+  },
+  <span class="c-prop">quantum</span>: {
+    <span class="c-prop">signatureScheme</span>: <span class="c-string">'dilithium3'</span>,
+  },
+  <span class="c-prop">agent</span>: {
+    <span class="c-prop">verbosity</span>: <span class="c-string">'verbose'</span>,
+    <span class="c-prop">color</span>: <span class="c-keyword">true</span>,
+  },
+});
+
+<span class="c-comment">// 3 — protect</span>
+app.<span class="c-fn">use</span>(<span class="c-var">guard</span>);
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CRYPTOGRAPHY -->
+<section id="crypto">
+  <div class="container">
+    <span class="section-label">Cryptography</span>
+    <h2 class="section-title">NIST-approved.<br><em>Quantum-proof.</em></h2>
+    <p class="section-sub">Commes implements all three NIST Post-Quantum Cryptography standards — the only suite secure against both classical and quantum adversaries.</p>
+
+    <div class="crypto-grid">
+      <div class="crypto-card">
+        <span class="crypto-tag">Key Encapsulation</span>
+        <h3>ML-KEM</h3>
+        <p>Module-Lattice-based Key Encapsulation — formerly CRYSTALS-Kyber. Replaces RSA and ECDH for key exchange. Immune to Shor's algorithm.</p>
+        <div class="crypto-specs">
+          <div class="spec-row">
+            <span class="spec-key">Standard</span>
+            <span class="spec-val green">FIPS 203</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-key">Security level</span>
+            <span class="spec-val">Category 3 (AES-192)</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-key">Public key size</span>
+            <span class="spec-val">1,184 bytes</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-key">Ciphertext size</span>
+            <span class="spec-val">1,088 bytes</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="crypto-card">
+        <span class="crypto-tag">Digital Signatures</span>
+        <h3>ML-DSA</h3>
+        <p>Module-Lattice-based Digital Signature Algorithm — formerly CRYSTALS-Dilithium. Replaces ECDSA for signing. Lattice-hard by construction.</p>
+        <div class="crypto-specs">
+          <div class="spec-row">
+            <span class="spec-key">Standard</span>
+            <span class="spec-val green">FIPS 204</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-key">Security level</span>
+            <span class="spec-val">Category 3 (AES-192)</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-key">Signature size</span>
+            <span class="spec-val">3,293 bytes</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-key">Public key size</span>
+            <span class="spec-val">1,952 bytes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AFFILIATE -->
+<section id="pricing" style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <span class="section-label">Affiliate Program</span>
+    <h2 class="section-title">Earn while your<br><em>community stays safe.</em></h2>
+    <p class="section-sub">Recommend Commes and earn recurring commission for every developer you bring in.</p>
+
+    <div class="affiliate-grid">
+      <div class="affiliate-card">
+        <div class="affiliate-tier">Starter</div>
+        <div class="affiliate-price"><span>$</span>20</div>
+        <div class="affiliate-term">per referral · first 12 months</div>
+        <ul class="affiliate-features">
+          <li>Unique referral link</li>
+          <li>Monthly payouts via Stripe</li>
+          <li>Real-time conversion dashboard</li>
+        </ul>
+        <a href="mailto:thecolourfoundation@gmail.com?subject=Commes Affiliate - Starter" class="btn-ghost" style="width:100%;justify-content:center;">Apply now</a>
+      </div>
+
+      <div class="affiliate-card featured">
+        <div class="featured-badge">Most Popular</div>
+        <div class="affiliate-tier">Growth</div>
+        <div class="affiliate-price"><span>$</span>35</div>
+        <div class="affiliate-term">per referral · 24 months</div>
+        <ul class="affiliate-features">
+          <li>Everything in Starter</li>
+          <li>Custom landing page</li>
+          <li>Co-marketing support</li>
+          <li>Dedicated partner manager</li>
+        </ul>
+        <a href="mailto:thecolourfoundation@gmail.com?subject=Commes Affiliate - Growth" class="btn-primary" style="width:100%;justify-content:center;">Apply now</a>
+      </div>
+
+      <div class="affiliate-card">
+        <div class="affiliate-tier">Enterprise</div>
+        <div class="affiliate-price"><span>$</span>75</div>
+        <div class="affiliate-term">per referral · lifetime</div>
+        <ul class="affiliate-features">
+          <li>Everything in Growth</li>
+          <li>Revenue share on upsells</li>
+          <li>Joint webinars & content</li>
+          <li>Early access to new features</li>
+        </ul>
+        <a href="mailto:thecolourfoundation@gmail.com?subject=Commes Affiliate - Enterprise" class="btn-ghost" style="width:100%;justify-content:center;">Apply now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTALL -->
+<section id="install">
+  <div class="container">
+    <div class="install-block">
+      <span class="section-label">Get started</span>
+      <h2 class="section-title" style="text-align:center;">Install Commes.</h2>
+      <p class="section-sub" style="text-align:center;margin:0 auto;">Free forever for open source. No credit card. No config. Just security.</p>
+
+      <div class="install-cmd" onclick="copyInstall(this)">
+        <div>
+          <span class="prompt">$</span>
+          <span class="cmd">npm install commes</span>
+        </div>
+        <button class="copy-btn" id="copy-install">Copy</button>
+      </div>
+
+      <div class="install-links">
+        <a href="docs.html">📄 Read the docs</a>
+        <a href="https://github.com/thecolourfoundation/Commes" target="_blank" rel="noopener">⭐ View on GitHub</a>
+        <a href="https://github.com/thecolourfoundation/Commes/blob/main/CHANGELOG.md" target="_blank" rel="noopener">📋 Changelog</a>
+        <a href="https://www.npmjs.com/package/commes" target="_blank" rel="noopener">📦 npm package</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="nav-logo" style="font-size:17px;">commes<span style="color:var(--green)">.</span></a>
+      <p>Quantum-resistant, AI-powered security middleware for Node.js. Built by The Colour Foundation.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Product</h4>
+      <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="https://github.com/thecolourfoundation/Commes/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Changelog</a></li>
+        <li><a href="https://github.com/thecolourfoundation/Commes/issues" target="_blank" rel="noopener">Roadmap</a></li>
+        <li><a href="https://www.npmjs.com/package/commes" target="_blank" rel="noopener">npm</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Developers</h4>
+      <ul>
+        <li><a href="docs.html">Documentation</a></li>
+        <li><a href="docs.html#api">API Reference</a></li>
+        <li><a href="https://github.com/thecolourfoundation/Commes" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://github.com/thecolourfoundation/Commes/tree/main/examples" target="_blank" rel="noopener">Examples</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="https://github.com/thecolourfoundation" target="_blank" rel="noopener">About</a></li>
+        <li><a href="https://github.com/thecolourfoundation/Commes/issues" target="_blank" rel="noopener">Contact</a></li>
+        <li><a href="https://github.com/thecolourfoundation/Commes/blob/main/SECURITY.md" target="_blank" rel="noopener">Security</a></li>
+        <li><a href="https://github.com/thecolourfoundation/Commes/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>Copyright © 2026 Commes, Inc. All rights reserved.</p>
+    <div class="footer-bottom-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function copyInstall(el) {
+    navigator.clipboard.writeText('npm install commes').then(() => {
+      const btn = el.querySelector('.copy-btn');
+      if (btn) {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 2000);
+      }
+    });
+  }
+
+  // Smooth nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === `#${current}` ? 'var(--white)' : '';
+    });
+  });
+</script>
+</body>
+</html>
