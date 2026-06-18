@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Commes documentation — quantum-resistant, AI-powered security middleware for Node.js." />
+  <title>Commes Docs — Security that thinks for itself</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #000000;
+      --surface: #0a0a0a;
+      --surface2: #111111;
+      --surface3: #1a1a1a;
+      --border: #1e1e1e;
+      --border2: #2e2e2e;
+      --green: #00ff88;
+      --green-muted: rgba(0,255,136,0.08);
+      --white: #ffffff;
+      --grey: #888888;
+      --grey2: #555555;
+      --text: #d4d4d4;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Inter', -apple-system, sans-serif;
+      --sidebar-w: 260px;
+      --nav-h: 56px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* TOP NAV */
+    .topnav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: rgba(0,0,0,0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topnav-left { display: flex; align-items: center; gap: 20px; }
+
+    .logo {
+      font-family: var(--mono);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--green); }
+
+    .docs-badge {
+      font-size: 11px;
+      color: var(--grey);
+      background: var(--surface3);
+      border: 1px solid var(--border2);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: var(--mono);
+    }
+
+    .topnav-right { display: flex; align-items: center; gap: 16px; }
+
+    .topnav-right a {
+      color: var(--grey);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.2s;
+    }
+
+    .topnav-right a:hover { color: var(--white); }
+
+    .topnav-right .gh-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: var(--text);
+      text-decoration: none;
+      transition: border-color 0.2s;
+    }
+
+    .topnav-right .gh-btn:hover { border-color: var(--green); color: var(--green); }
+
+    /* LAYOUT */
+    .layout {
+      display: flex;
+      padding-top: var(--nav-h);
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      position: fixed;
+      top: var(--nav-h);
+      left: 0;
+      bottom: 0;
+      overflow-y: auto;
+      border-right: 1px solid var(--border);
+      padding: 32px 0 80px;
+      background: var(--surface);
+    }
+
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-track { background: transparent; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+    .sidebar-section { margin-bottom: 32px; }
+
+    .sidebar-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey2);
+      padding: 0 20px;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .sidebar-link {
+      display: block;
+      padding: 7px 20px;
+      font-size: 13px;
+      color: var(--grey);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+
+    .sidebar-link:hover { color: var(--white); background: var(--green-muted); }
+    .sidebar-link.active { color: var(--green); border-left-color: var(--green); background: var(--green-muted); }
+
+    /* CONTENT */
+    .content {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      max-width: 800px;
+      padding: 64px 64px 120px;
+    }
+
+    /* TYPOGRAPHY */
+    .content h1 {
+      font-size: 36px;
+      font-weight: 300;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .content h2 {
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      margin: 56px 0 16px;
+      padding-top: 56px;
+      border-top: 1px solid var(--border);
+    }
+
+    .content h2:first-of-type { border-top: none; margin-top: 32px; }
+
+    .content h3 {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--white);
+      margin: 28px 0 10px;
+    }
+
+    .content p { margin-bottom: 16px; color: var(--text); }
+
+    .content ul, .content ol {
+      margin: 0 0 16px 20px;
+      color: var(--text);
+    }
+
+    .content li { margin-bottom: 6px; }
+
+    .content a { color: var(--green); text-decoration: none; }
+    .content a:hover { text-decoration: underline; }
+
+    .lead {
+      font-size: 17px;
+      color: var(--grey);
+      font-weight: 300;
+      margin-bottom: 32px;
+      line-height: 1.8;
+    }
+
+    /* CODE */
+    .code-block {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 20px 0;
+    }
+
+    .code-block-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface3);
+    }
+
+    .code-lang {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--grey2);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .code-copy {
+      font-family: var(--sans);
+      font-size: 11px;
+      color: var(--grey2);
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .code-copy:hover { color: var(--green); }
+
+    .code-block pre {
+      padding: 20px;
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    code {
+      font-family: var(--mono);
+      font-size: 12px;
+      background: var(--surface3);
+      border: 1px solid var(--border2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--green);
+    }
+
+    .c-comment { color: #555; }
+    .c-keyword { color: #c792ea; }
+    .c-string { color: #c3e88d; }
+    .c-fn { color: #82aaff; }
+    .c-var { color: var(--green); }
+    .c-prop { color: #f07178; }
+    .c-num { color: #f78c6c; }
+    .c-type { color: #ffcb6b; }
+
+    /* CALLOUTS */
+    .callout {
+      border-left: 3px solid var(--green);
+      background: var(--green-muted);
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+
+    .callout.warn {
+      border-color: #f59e0b;
+      background: rgba(245,158,11,0.06);
+    }
+
+    .callout-title {
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 6px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* TABLE */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 13px;
+    }
+
+    th {
+      text-align: left;
+      padding: 10px 16px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--grey2);
+      border-bottom: 1px solid var(--border);
+      background: var(--surface2);
+    }
+
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      vertical-align: top;
+    }
+
+    td:first-child {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--green);
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    /* PAGE FOOTER NAV */
+    .page-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 80px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      gap: 16px;
+    }
+
+    .page-nav a {
+      color: var(--grey);
+      text-decoration: none;
+      font-size: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: color 0.2s;
+    }
+
+    .page-nav a:hover { color: var(--white); }
+    .page-nav a span { font-size: 12px; color: var(--grey2); }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .content { margin-left: 0; padding: 32px 20px 80px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="topnav">
+  <div class="topnav-left">
+    <a href="index.html" class="logo">commes<span>.</span></a>
+    <span class="docs-badge">docs</span>
+  </div>
+  <div class="topnav-right">
+    <a href="index.html">Home</a>
+    <a href="https://github.com/thecolourfoundation/Commes" target="_blank" rel="noopener" class="gh-btn">
+      ★ GitHub
+    </a>
+  </div>
+</nav>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <span class="sidebar-label">Getting Started</span>
+      <a href="#introduction" class="sidebar-link active">Introduction</a>
+      <a href="#installation" class="sidebar-link">Installation</a>
+      <a href="#quickstart" class="sidebar-link">Quick start</a>
+      <a href="#requirements" class="sidebar-link">Requirements</a>
+    </div>
+
+    <div class="sidebar-section">
+      <span class="sidebar-label">Core Concepts</span>
+      <a href="#shield" class="sidebar-link">Shield middleware</a>
+      <a href="#events" class="sidebar-link">Threat events</a>
+      <a href="#agent" class="sidebar-link">AI agent</a>
+      <a href="#rate-limiting" class="sidebar-link">Rate limiting</a>
+      <a href="#anomaly" class="sidebar-link">Anomaly detection</a>
+    </div>
+
+    <div class="sidebar-section">
+      <span class="sidebar-label">Cryptography</span>
+      <a href="#pqc" class="sidebar-link">Post-quantum crypto</a>
+      <a href="#token-signing" class="sidebar-link">Token signing</a>
+      <a href="#keygen" class="sidebar-link">Key generation</a>
+    </div>
+
+    <div class="sidebar-section">
+      <span class="sidebar-label">CLI</span>
+      <a href="#cli-scan" class="sidebar-link">Scan a project</a>
+      <a href="#cli-monitor" class="sidebar-link">Monitor</a>
+      <a href="#cli-keygen" class="sidebar-link">Keygen</a>
+    </div>
+
+    <div class="sidebar-section">
+      <span class="sidebar-label">API Reference</span>
+      <a href="#api" class="sidebar-link">shield()</a>
+      <a href="#api-emitter" class="sidebar-link">shieldEmitter</a>
+      <a href="#api-agent" class="sidebar-link">Agent</a>
+      <a href="#api-crypto" class="sidebar-link">Crypto utilities</a>
+      <a href="#api-config" class="sidebar-link">ShieldConfig</a>
+    </div>
+
+    <div class="sidebar-section">
+      <span class="sidebar-label">Guides</span>
+      <a href="#express" class="sidebar-link">Express</a>
+      <a href="#fastify" class="sidebar-link">Fastify</a>
+      <a href="#redis" class="sidebar-link">Redis store</a>
+      <a href="#production" class="sidebar-link">Production checklist</a>
+    </div>
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <!-- INTRODUCTION -->
+    <div id="introduction">
+      <h1>Commes Documentation</h1>
+      <p class="lead">A quantum-resistant, AI-powered security layer for Node.js applications. One middleware call. Six layers of protection.</p>
+
+      <div class="callout">
+        <div class="callout-title">v1.0.0 — Now on npm</div>
+        Commes is production-ready. Install with <code>npm install commes</code>.
+      </div>
+
+      <p>Commes combines platform-level threat detection with post-quantum cryptographic primitives — all surfaced through an AI agent that explains every attack in plain English while your application runs.</p>
+
+      <p>It detects SQL injection, NoSQL injection, command injection, XSS, path traversal, prototype pollution, CSRF, and secret leakage — before any of it reaches your handlers.</p>
+    </div>
+
+    <!-- INSTALLATION -->
+    <h2 id="installation">Installation</h2>
+    <p>Install Commes from npm. Node.js 18 or later is required.</p>
+
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-lang">bash</span>
+        <button class="code-copy" onclick="copyCode(this, 'npm install commes')">Copy</button>
+      </div>
+      <pre>npm install commes</pre>
+    </div>
+
+    <p>Commes ships its own WASM crypto primitives with zero peer dependencies. It works in Node.js 18+ and Bun.</p>
+
+    <!-- QUICK START -->
+    <h2 id="quickstart">Quick start</h2>
+    <p>Drop <code>shield()</code> into your middleware stack as early as possible. Parse request bodies before Commes so it can inspect them.</p>
+
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-lang">javascript</span>
+        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+      </div>
+      <pre><span class="c-keyword">import</span> express <span class="c-keyword">from</span> <span class="c-string">'express'</span>;
+<span class="c-keyword">import</span> { <span class="c-var">shield</span> } <span class="c-keyword">from</span> <span class="c-string">'commes'</span>;
+
+<span class="c-keyword">const</span> app = <span class="c-fn">express</span>();
+
+<span class="c-comment">// Parse bodies before Commes so it can inspect them</span>
+app.<span class="c-fn">use</span>(express.<span class="c-fn">json</span>({ limit: <span class="c-string">'1mb'</span> }));
+app.<span class="c-fn">use</span>(express.<span class="c-fn">urlencoded</span>({ extended: <span class="c-keyword">true</span> }));
+
+<span class="c-comment">// Drop this in as early as possible</span>
+app.<span class="c-fn">use</span>(<span class="c-fn">shield</span>({
+  <span class="c-prop">rateLimit</span>: {
+    <span class="c-prop">windowMs</span>: <span class="c-num">60_000</span>,
+    <span class="c-prop">maxRequests</span>: <span class="c-num">100</span>,
+    <span class="c-prop">blockDurationMs</span>: <span class="c-num">300_000</span>,
+  },
+  <span class="c-prop">whitelist</span>: [<span class="c-string">'/healthz'</span>],
+  <span class="c-prop">dryRun</span>: <span class="c-keyword">false</span>,
+}));
+
+app.<span class="c-fn">get</span>(<span class="c-string">'/'</span>, (req, res) => {
+  res.<span class="c-fn">json</span>({ status: <span class="c-string">'ok'</span> });
+});
+
+app.<span class="c-fn">listen</span>(<span class="c-num">3000</span>);</pre>
+    </div>
+
+    <h2 id="requirements">Requirements</h2>
+    <ul>
+      <li>Node.js 18 or later</li>
+      <li>Bun (supported)</li>
+      <li>TypeScript 5+ (optional — full types included)</li>
+    </ul>
+
+    <!-- SHIELD -->
+    <h2 id="shield">Shield middleware</h2>
+    <p>The <code>shield()</code> function returns an Express-compatible middleware that inspects every incoming request for threats before it reaches your route handlers.</p>
+
+    <p><strong>What it detects:</strong></p>
+    <ul>
+      <li>SQL injection, NoSQL injection, command injection</li>
+      <li>Cross-site scripting (XSS)</li>
+      <li>Path traversal attacks</li>
+      <li>Prototype pollution</li>
+      <li>CSRF attempts</li>
+      <li>Secret leakage in request bodies</li>
+      <li>Behavioural anomalies vs. your traffic baseline</li>
+    </ul>
+
+    <p>Every response also gets the full OWASP-recommended security header suite: strict CSP, HSTS, X-Frame-Options, Permissions-Policy, and Cross-Origin policies.</p>
+
+    <!-- EVENTS -->
+    <h2 id="events">Threat events</h2>
+    <p>Commes emits structured events you can forward to any logging pipeline, Slack, or PagerDuty.</p>
+
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-lang">javascript</span>
+        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+      </div>
+      <pre><span class="c-keyword">import</span> { <span class="c-var">shieldEmitter</span> } <span class="c-keyword">from</span> <span class="c-string">'commes'</span>;
+
+<span class="c-comment">// Every detected threat, blocked or flagged</span>
+shieldEmitter.<span class="c-fn">on</span>(<span class="c-string">'threat'</span>, (event) => {
+  console.<span class="c-fn">log</span>(`[${event.severity}] ${event.category} from ${event.source.ip}`);
+});
+
+<span class="c-comment">// Only requests that were actually blocked</span>
+shieldEmitter.<span class="c-fn">on</span>(<span class="c-string">'blocked'</span>, (event) => {
+  myLogger.<span class="c-fn">warn</span>(<span class="c-string">'Request blocked'</span>, { event });
+});</pre>
+    </div>
+
+    <!-- AGENT -->
+    <h2 id="agent">AI agent</h2>
+    <p>The interactive CLI agent watches your event stream, prints structured threat reports, correlates events across IPs, detects multi-vector attack patterns, and answers your questions about what's happening.</p>
+
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-lang">javascript</span>
+        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+      </div>
+      <pre><span class="c-keyword">import</span> { <span class="c-var">Agent</span> } <span class="c-keyword">from</span> <span class="c-string">'commes'</span>;
+
+<span class="c-keyword">const</span> agent = <span class="c-keyword">new</span> <span class="c-fn">Agent</span>({
+  <span class="c-prop">verbosity</span>: <span class="c-string">'verbose'</span>,   <span class="c-comment">// 'concise' for one-liners</span>
+  <span class="c-prop">streamEvents</span>: <span class="c-keyword">true</span>,
+  <span class="c-prop">color</span>: <span class="c-keyword">true</span>,
+});
+
+agent.<span class="c-fn">start</span>(<span class="c-keyword">true</span>); <span class="c-comment">// true = open interactive REPL</span></pre>
+    </div>
+
+    <h3>REPL commands</h3>
+    <table>
+      <thead>
+        <tr><th>Command</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>status</td><td>Overall threat statistics and uptime</td></tr>
+        <tr><td>threats</td><td>The 10 most recent threat events</td></tr>
+        <tr><td>traffic</td><td>Request rate by endpoint</td></tr>
+        <tr><td>top</td><td>Top attacker IP addresses</td></tr>
+        <tr><td>explain &lt;type&gt;</td><td>Deep explanation of a threat category</td></tr>
+        <tr><td>clear</td><td>Clear the terminal</td></tr>
+        <tr><td>exit</td><td>Shut down the agent</td></tr>
+      </tbody>
+    </table>
+
+    <p>Examples: <code>explain xss</code> · <code>explain sql-injection</code> · <code>explain prototype-pollution</code></p>
+
+    <!-- RATE LIMITING -->
+    <h2 id="rate-limiting">Rate limiting</h2>
+    <p>Commes uses a sliding-window rate limiter that tracks request volume per IP. IPs that trigger repeated attack events are automatically graduated from rate-limited to fully blocked.</p>
+
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-lang">javascript</span>
+        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+      </div>
+      <pre><span class="c-fn">shield</span>({
+  <span class="c-prop">rateLimit</span>: {
+    <span class="c-prop">windowMs</span>: <span class="c-num">60_000</span>,       <span class="c-comment">// 1-minute window</span>
+    <span class="c-prop">maxRequests</span>: <span class="c-num">100</span>,      <span class="c-comment">// requests per window per IP</span>
+    <span class="c-prop">blockDurationMs</span>: <span class="c-num">300_000</span>, <span class="c-c
